@@ -1,0 +1,2 @@
+# umamusume-team-race-analyst
+ウマ娘のチームレースの結果スクショからポイントを自動取得して平均値を見るGAS
