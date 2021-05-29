@@ -54,9 +54,14 @@ function inputDataFromScreenShot() {
       if (~str.indexOf(name)) {
         return true;
       }
-      index += 1;
+      index++;
     })
-    var point = parseInt(raw_texts[index].replace(/,/g, ''));
+
+    // MVPを取った場合MVPが入ってしまう可能性があるためケアする
+    if (raw_texts[index] == "MVP") {
+      index++;
+    }
+    var point = parseInt(raw_texts[index].replace(/[,|.]/g, ''));
     updateValues.push([point]);
   })
   ADD_SHEET.getRange(POINT_RANGE).setValues(updateValues);
