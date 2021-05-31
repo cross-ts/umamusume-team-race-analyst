@@ -33,6 +33,8 @@ function inputDataFromScreenShot() {
   }
   var files = folder.next().getFiles();
   var raw_texts = [];
+
+  // Google DocumentのOCRを使い画像からテキストデータを作成
   while (files.hasNext()) {
     var file = files.next();
     var blobData = file.getBlob();
@@ -43,6 +45,7 @@ function inputDataFromScreenShot() {
     Drive.Files.remove(fileID);
     Drive.Files.remove(file.getId());
   }
+  console.log(raw_texts);
 
   // 取得したスコアとウマ娘名で突合を行いスコアを入力する
   var umamusumeNames = ADD_SHEET.getRange(UMAMUSUME_NAMES_RANGE).getValues();
@@ -50,6 +53,9 @@ function inputDataFromScreenShot() {
   umamusumeNames.forEach(e => {
     var name = e[0];
     var index = 1;
+
+    // データ内からウマ娘名を検索
+    // NOTE: OCRからの取得がうまくいっていない場合引っ掛からないことがある
     raw_texts.some(str => {
       if (~str.indexOf(name)) {
         return true;
@@ -57,13 +63,27 @@ function inputDataFromScreenShot() {
       index++;
     })
 
+    // 名前検索が引っ掛からなかった場合警告を表示して次のウマ娘に移る
+    if (raw_texts[index] == undefined) {
+      var alertMessage = [
+        '手入力してください',
+        `name: ${name}`,
+        `raws_text: ${raw_texts.join('\n')}`,
+        `index: ${index}`,
+      ]
+      alert(`${name}のデータ取得に失敗`, alertMessage.join('\n'));
+      updateValues.push([0]);
+      return;
+    }
+
     // MVPを取った場合MVPが入ってしまう可能性があるためケアする
     if (raw_texts[index] == "MVP") {
       index++;
     }
-    var point = parseInt(raw_texts[index].replace(/[,|.]/g, ''));
+    var point = parseInt(raw_texts[index].replace(/[,|.|_]/g, ''));
     updateValues.push([point]);
   })
+  console.log(updateValues);
   ADD_SHEET.getRange(POINT_RANGE).setValues(updateValues);
 }
 
