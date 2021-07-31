@@ -50,8 +50,11 @@ function inputDataFromScreenShot() {
   // 取得したスコアとウマ娘名で突合を行いスコアを入力する
   var umamusumeNames = ADD_SHEET.getRange(UMAMUSUME_NAMES_RANGE).getValues();
   var updateValues = [];
+  console.log(umamusumeNames);
   umamusumeNames.forEach(e => {
-    var name = e[0];
+    // 衣装違いのケアのために検索名はウマ娘名になるようにする
+    var name = e[0].split('(')[0];
+    console.log(name);
     var index = 1;
 
     // データ内からウマ娘名を検索
