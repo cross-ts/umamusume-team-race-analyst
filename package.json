@@ -1,0 +1,19 @@
+{
+  "name": "teamrace",
+  "version": "1.0.0",
+  "description": "- ウマ娘のチームレースの結果スクショからポイントを自動取得して平均値を見るGAS - これの裏側で使ってるスクリプト   - https://docs.google.com/spreadsheets/d/1o5dlJCualcLwP3Sk2b3LTH3dNN1hPp8o-uchAAR8654/edit?usp=sharing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/cross-ts/umamusume-team-race-analyst.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cross-ts/umamusume-team-race-analyst/issues"
+  },
+  "homepage": "https://github.com/cross-ts/umamusume-team-race-analyst#readme"
+}
